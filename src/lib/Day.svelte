@@ -18,7 +18,6 @@
 
 	.day img {
 		width: 56.44px;
-		height: 62px;
 		margin: auto;
 		display: block;
 		margin-top: 10px;
