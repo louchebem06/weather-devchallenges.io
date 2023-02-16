@@ -1,13 +1,17 @@
 <script lang="ts">
 	import Week from "$lib/Week.svelte";
 	import Today from "$lib/Today.svelte";
+	import RoundButton from "./RoundButton.svelte";
 </script>
 
 <div class="content">
+	<div class="buttons">
+		<RoundButton content="℃" toggle={true}/>
+		<RoundButton content="℉" toggle={false}/>
+	</div>
 	<Week />
 	<Today />
-	<!-- svelte-ignore a11y-invalid-attribute -->
-	<p>created by <a href="#">louchebem06</a> - devChallenges.io</p>
+	<p>created by <a href="https://github.com/louchebem06">louchebem06</a> - devChallenges.io</p>
 </div>
 
 <style>
@@ -16,6 +20,7 @@
 		background-color: #100E1D;
 		min-height: 100vh;
 		width: 100%;
+		position: relative;
 	}
 
 	p, a {
@@ -30,6 +35,22 @@
 
 	p a {
 		font-weight: bold;
+	}
+
+	p {
+		position: absolute;
+		bottom: 25px;
+		left: 0;
+		width: 100%;
+	}
+
+	.buttons {
+		display: flex;
+		justify-content: flex-end;
+		gap: 12px;
+		padding: 42px;
+		max-width: 660px;
+		margin: auto;
 	}
 
 </style>

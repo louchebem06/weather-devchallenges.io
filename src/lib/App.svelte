@@ -11,6 +11,7 @@
 <style>
 	.app {
 		display: flex;
+		align-items: stretch;
 	}
 
 	@media screen and (max-width: 920px) {

@@ -7,7 +7,6 @@
 		flex-shrink: 0;
 		width: 459px;
 		min-height: 100vh;
-		height: 100vh;
 		background-color: #1E213A;
 	}
 
