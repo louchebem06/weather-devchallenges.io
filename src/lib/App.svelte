@@ -1,11 +1,13 @@
 <script lang="ts">
 	import Panel from "$lib/Panel.svelte";
 	import Content from "$lib/Content.svelte";
+
+	let celsius: boolean = true;
 </script>
 
 <div class="app">
-	<Panel />
-	<Content />
+	<Panel bind:celsius={celsius}/>
+	<Content bind:celsius={celsius}/>
 </div>
 
 <style>

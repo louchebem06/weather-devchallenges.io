@@ -1,15 +1,27 @@
 <script lang="ts">
 	import Week from "$lib/Week.svelte";
 	import Today from "$lib/Today.svelte";
-	import RoundButton from "./RoundButton.svelte";
+	import RoundButton from "$lib/RoundButton.svelte";
+
+	export let celsius: boolean;
+	let fahrenheit: boolean = !celsius;
+
+	const setCelsius = () => {
+		celsius = true;
+		fahrenheit = !celsius;
+	}
+	const setFahrenheit = () => {
+		celsius = false;
+		fahrenheit = !celsius;
+	}
 </script>
 
 <div class="content">
 	<div class="buttons">
-		<RoundButton content="℃" toggle={true}/>
-		<RoundButton content="℉" toggle={false}/>
+		<RoundButton content="℃" bind:toggle={celsius} fn={setCelsius}/>
+		<RoundButton content="℉" bind:toggle={fahrenheit} fn={setFahrenheit}/>
 	</div>
-	<Week />
+	<Week bind:celsius={celsius} />
 	<Today />
 	<p>created by <a href="https://github.com/louchebem06">louchebem06</a> - devChallenges.io</p>
 </div>

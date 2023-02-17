@@ -1,9 +1,12 @@
 <script lang="ts">
 	export let content: string;
 	export let toggle: boolean;
+	export let fn: any;
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
+	on:click={fn}
 	class:target={toggle}
 	class:notTarget={!toggle}
 	class="button">
@@ -24,6 +27,7 @@
 		line-height: 21px;
 		text-align: center;
 		cursor: pointer;
+		user-select: none;
 	}
 
 	.target {

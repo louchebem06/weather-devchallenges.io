@@ -1,13 +1,15 @@
 <script lang="ts">
 	import Day from "$lib/Day.svelte";
+
+	export let celsius: boolean;
 </script>
 
 <div class="week">
-	<Day />
-	<Day />
-	<Day />
-	<Day />
-	<Day />
+	<Day bind:celsius={celsius} />
+	<Day bind:celsius={celsius} />
+	<Day bind:celsius={celsius} />
+	<Day bind:celsius={celsius} />
+	<Day bind:celsius={celsius} />
 </div>
 
 <style>

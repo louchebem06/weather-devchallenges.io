@@ -1,20 +1,48 @@
 <script lang="ts">
 	let search: boolean = false;
+
+	export let celsius: boolean;
+
+	function getLocation() {
+		navigator.geolocation.getCurrentPosition(
+			(e) => {
+				const cord = e.coords;
+				const lat = cord.latitude;
+				const long = cord.longitude;
+				console.log(lat, long);
+			},
+			(e) => { alert(e.message )}
+		);
+	}
 </script>
 
+<!-- TODO create div in composante -->
+<!-- TODO create 2 composante panel content and panel search -->
 <div class="panel">
 	{#if !search}
-		<!-- Call to action button search bar -->
-		<!-- Catt to action button location in roundButton -->
+		<div class="searchButton">
+			<button on:click={() => {search = true}}>Search for places</button>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<span on:click={getLocation} class="material-symbols-outlined">
+				my_location
+			</span>
+		</div>
 
 		<div class="hero">
 			<img src="/Cloud-background.png" alt="" />
 			<img src="/Clear.png" alt="" />
 		</div>
 
+		<!-- TODO Fix position h2 -->
 		<div class="temp">
 			<h1>15</h1>
-			<h2>℃</h2>
+			<h2>
+				{#if celsius}
+				℃
+				{:else}
+				℉
+				{/if}
+			</h2>
 		</div>
 		
 		<h3>Shower</h3>
@@ -26,11 +54,20 @@
 		</div>
 
 		<div class="location">
-			<!-- TODO logo location -->
+			<span class="material-symbols-outlined">
+				location_on
+			</span>				
 			<p>Helsinki</p>
 		</div>
 	{:else}
-		<p>search</p>
+		<button on:click={() => {search = false}}>
+			<span class="material-symbols-outlined">
+				close
+			</span>
+		</button>
+		<span class="material-symbols-outlined">
+			search
+		</span>
 	{/if}
 </div>
 
@@ -52,6 +89,8 @@
 	.hero {
 		position: relative;
 		min-height: 400px;
+		overflow: hidden;
+		margin-top: -10px;
 	}
 
 	.hero img {
@@ -69,6 +108,84 @@
 		top: 50%;
 		transform: translate(-50%, -50%);
 		width: 202px;
+	}
+
+	.searchButton {
+		display: flex;
+		justify-content: space-between;
+		padding: 42px 46px 0 46px;
+	}
+
+	.searchButton button {
+		width: 161px;
+		height: 40px;
+		background: #6E707A;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+		color: #E7E7EB;
+		border: none;
+		cursor: pointer;
+		font-style: normal;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 19px;
+	}
+
+	.searchButton span {
+		color: #E7E7EB;
+		width: 40px;
+		height: 40px;
+		border-radius: 40px;
+		background-color: rgba(255, 255, 255, 0.2);
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		font-size: 22px;
+		user-select: none;
+	}
+
+	.temp, .date, .location {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.panel h3 {
+		text-align: center;
+		color: #A09FB1;
+		padding: 50px 0;
+	}
+
+	.date {
+		padding-bottom: 32px;
+		gap: 16px;
+	}
+
+	.location {
+		gap: 9px;
+	}
+
+	.temp {
+		padding-top: 30px;
+		font-style: normal;
+		font-weight: 500;
+	}
+
+	.temp h1 {
+		color: #E7E7EB;
+		font-size: 144px;
+		line-height: 169px;
+	}
+
+	.temp h2 {
+		color: #A09FB1;
+		font-size: 48px;
+		line-height: 56.35px;
+	}
+
+	.date, .location {
+		color: #88869D;
 	}
 
 </style>

@@ -1,9 +1,27 @@
+<script lang="ts">
+	export let celsius: boolean;
+</script>
+
 <div class="day">
 	<h3 class="title">Tomorrow</h3>
 	<img src="/Clear.png" alt="" />
 	<div class="temp">
-		<p class="maxTemp">16°C</p>
-		<p class="minTemp">11°C</p>
+		<p class="maxTemp">
+			16
+			{#if celsius}
+			℃
+			{:else}
+			℉
+			{/if}
+		</p>
+		<p class="minTemp">
+			11
+			{#if celsius}
+			℃
+			{:else}
+			℉
+			{/if}
+		</p>
 	</div>
 </div>
 
