@@ -1,5 +1,6 @@
 <script lang="ts">
-  	import { type Weather, type Week, idToImg, kTof, kToc, getWeather, getWeek } from "./weatherApi";
+  	import { type Weather, type Week, idToImg, kTof, kToc, getWeather, getWeek } from "$lib/weatherApi";
+	import Hero from "./Hero.svelte";
 
 	export let celsius: boolean;
 	export let weather: Weather;
@@ -49,12 +50,8 @@
 			</span>
 		</div>
 
-		<div class="hero">
-			<img src="/Cloud-background.png" alt="" />
-			<img src="{idToImg(weather.weather[0].id)}" alt="" />
-		</div>
+		<Hero bind:weather={weather} />
 
-		<!-- TODO Fix position h2 -->
 		<div class="temp">
 			<h1>
 				{#if celsius}
@@ -111,30 +108,6 @@
 		.panel {
 			width: 100%;
 		}
-	}
-
-	.hero {
-		position: relative;
-		min-height: 400px;
-		overflow: hidden;
-		margin-top: -10px;
-	}
-
-	.hero img {
-		position: absolute;
-		left: 50%;
-	}
-
-	.hero img:nth-of-type(1) {
-		top: 0;
-		transform: translateX(-50%);
-		opacity: 0.2;
-	}
-
-	.hero img:nth-of-type(2) {
-		top: 50%;
-		transform: translate(-50%, -50%);
-		width: 202px;
 	}
 
 	.searchButton {
