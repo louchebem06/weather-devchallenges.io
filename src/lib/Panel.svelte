@@ -1,6 +1,7 @@
 <script lang="ts">
-  	import { type Weather, type Week, idToImg, kTof, kToc, getWeather, getWeek } from "$lib/weatherApi";
-	import Hero from "./Hero.svelte";
+  	import { type Weather, type Week, getWeather, getWeek } from "$lib/weatherApi";
+	import Hero from "$lib/Hero.svelte";
+	import Temp from "$lib/Temp.svelte";
 
 	export let celsius: boolean;
 	export let weather: Weather;
@@ -51,24 +52,7 @@
 		</div>
 
 		<Hero bind:weather={weather} />
-
-		<div class="temp">
-			<h1>
-				{#if celsius}
-				{kToc(weather.main.temp)}
-				{:else}
-				{kTof(weather.main.temp)}
-				{/if}
-			</h1>
-			<h2>
-				{#if celsius}
-				℃
-				{:else}
-				℉
-				{/if}
-			</h2>
-		</div>
-		
+		<Temp bind:weather={weather} bind:celsius={celsius}/>
 		<h3>{weather.weather[0].description}</h3>
 		
 		<div class="date">
@@ -145,7 +129,7 @@
 		user-select: none;
 	}
 
-	.temp, .date, .location {
+	.date, .location {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -165,25 +149,6 @@
 
 	.location {
 		gap: 9px;
-	}
-
-	.temp {
-		padding-top: 30px;
-		font-style: normal;
-		font-weight: 500;
-	}
-
-	.temp h1 {
-		color: #E7E7EB;
-		font-size: 144px;
-		line-height: 169px;
-	}
-
-	.temp h2 {
-		color: #A09FB1;
-		font-size: 48px;
-		line-height: 56.35px;
-		margin-top: 65px;
 	}
 
 	.date, .location {
