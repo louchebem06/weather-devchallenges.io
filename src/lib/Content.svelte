@@ -2,8 +2,11 @@
 	import Week from "$lib/Week.svelte";
 	import Today from "$lib/Today.svelte";
 	import RoundButton from "$lib/RoundButton.svelte";
+	import type { Weather } from "./weatherApi";
 
 	export let celsius: boolean;
+	export let weather: Weather;
+
 	let fahrenheit: boolean = !celsius;
 
 	const setCelsius = () => {

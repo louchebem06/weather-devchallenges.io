@@ -1,17 +1,44 @@
 <script lang="ts">
-	let search: boolean = false;
+  	import { type Weather, idToImg, kTof, kToc, getWeather } from "./weatherApi";
 
 	export let celsius: boolean;
+	export let weather: Weather;
+	export let loader: boolean;
+
+	let search: boolean = false;
+	const date: Date = new Date(weather.dt * 1000);
+	let dateString: string
+		= date.toLocaleDateString("en-US", {
+				weekday: "short",
+				month: "short",
+				day: "numeric"
+			});
+	
+	const splitDate = dateString.split(' ');
+	dateString = `${splitDate[0]} ${splitDate[2]} ${splitDate[1]}`; 
+	
+	function beginLoader() {
+		loader = true;
+	}
+
+	function endLoader() {
+		loader = false;
+	}
 
 	function getLocation() {
+		beginLoader();
 		navigator.geolocation.getCurrentPosition(
-			(e) => {
+			async (e) => {
 				const cord = e.coords;
 				const lat = cord.latitude;
-				const long = cord.longitude;
-				console.log(lat, long);
+				const lon = cord.longitude;
+				weather = await getWeather(lat, lon) as Weather;
+				endLoader();
 			},
-			(e) => { alert(e.message )}
+			(e) => {
+				endLoader();
+				alert(e.message )
+			}
 		);
 	}
 </script>
@@ -30,12 +57,18 @@
 
 		<div class="hero">
 			<img src="/Cloud-background.png" alt="" />
-			<img src="/Clear.png" alt="" />
+			<img src="{idToImg(weather.weather[0].id)}" alt="" />
 		</div>
 
 		<!-- TODO Fix position h2 -->
 		<div class="temp">
-			<h1>15</h1>
+			<h1>
+				{#if celsius}
+				{kToc(weather.main.temp)}
+				{:else}
+				{kTof(weather.main.temp)}
+				{/if}
+			</h1>
 			<h2>
 				{#if celsius}
 				℃
@@ -45,19 +78,19 @@
 			</h2>
 		</div>
 		
-		<h3>Shower</h3>
+		<h3>{weather.weather[0].description}</h3>
 		
 		<div class="date">
 			<p>Today</p>
 			<p>•</p>
-			<p>Fri, 5 Jun</p>
+			<p>{dateString}</p>
 		</div>
 
 		<div class="location">
 			<span class="material-symbols-outlined">
 				location_on
 			</span>				
-			<p>Helsinki</p>
+			<p>{weather.name}</p>
 		</div>
 	{:else}
 		<button on:click={() => {search = false}}>
@@ -155,6 +188,7 @@
 		text-align: center;
 		color: #A09FB1;
 		padding: 50px 0;
+		text-transform: capitalize;
 	}
 
 	.date {
