@@ -6,6 +6,14 @@ export interface Error {
 	message: string
 };
 
+export interface Location {
+	"name": string
+	"lat": number,
+	"lon": number,
+	"country": string,
+	"state": string
+}
+
 export interface Weather {
 	"coord": {
 	  "lon": number,
@@ -274,6 +282,19 @@ export function getWeek(lat: number, lon: number): Promise<Week|Error> {
 			.then(async (response) => {
 				let ret = await response.json();
 				return (removeDateInList(ret));
+			})
+			.catch(async (e) => {
+				return await e.json();
+			})
+	);
+}
+
+export function searchCity(ville: string): Promise<Location[]|Error> {
+	const url = `https://api.openweathermap.org/geo/1.0/direct?q=${ville}&limit=5&appid=${api_key}`;
+	return (
+		fetch(url)
+			.then(async (response) => {
+				return await response.json();
 			})
 			.catch(async (e) => {
 				return await e.json();

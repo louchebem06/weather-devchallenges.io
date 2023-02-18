@@ -21,12 +21,16 @@
 			bind:search={search}
 		/>
 	{:else}
-		<SeachPanel bind:search={search}/>
+		<SeachPanel
+			bind:search={search}
+			bind:loader={loader}
+			bind:weather={weather}
+			bind:week={week}
+		/>
 	{/if}
 </div>
 
 <style>
-
 	.panel {
 		flex-shrink: 0;
 		width: 459px;
