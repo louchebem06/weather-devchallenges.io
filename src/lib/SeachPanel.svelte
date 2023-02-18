@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getWeather, getWeek, searchCity, type Location, type Weather, type Week } from "$lib/weatherApi";
+  import { onMount } from "svelte";
 
 	export let search: boolean;
 	export let loader: boolean;
@@ -7,8 +8,10 @@
 	export let week: Week;
 
 	let inputSearch: string;
-
+	let searchInput: any;
 	let locations: Location[] = []
+
+	onMount(() => searchInput.focus())
 
 	async function searchFunction() {
 		if (inputSearch === undefined || inputSearch === "")
@@ -24,7 +27,7 @@
 			searchFunction();
 	}
 
-	async function getSearch(lat: number, lon: number) {
+	async function getSearch(lat: number, lon: number): Promise<void> {
 		loader = true;
 		weather = await getWeather(lat, lon) as Weather;
 		week = await getWeek(lat, lon) as Week;
@@ -43,7 +46,7 @@
 		<span class="material-symbols-outlined">
 			search
 		</span>
-		<input on:keydown={detectEnter} bind:value={inputSearch} type="text" placeholder="search location">
+		<input bind:this={searchInput} on:keydown={detectEnter} bind:value={inputSearch} type="text" placeholder="search location">
 	</div>
 	<button on:click={searchFunction}>
 		<div class="btn">
