@@ -2,6 +2,7 @@
 	import Panel from "$lib/Panel.svelte";
 	import Content from "$lib/Content.svelte";
 	import type { Weather } from "$lib/weatherApi";
+	import Loader from "./Loader.svelte";
 
 	export let weather: Weather;
 
@@ -9,12 +10,7 @@
 	let loader: boolean = false;
 </script>
 
-{#if loader}
-	<div class="containerLoader">
-	</div>
-	<span class="loader">
-	</span>
-{/if}
+<Loader bind:loader={loader}/>
 
 <div class="app">
 	<Panel bind:loader={loader} bind:celsius={celsius} bind:weather={weather}/>
@@ -25,76 +21,6 @@
 	.app {
 		display: flex;
 		align-items: stretch;
-	}
-
-	.containerLoader {
-		width: 100vw;
-		height: 100vh;
-		position: fixed;
-		top: 0;
-		left: 0;
-		opacity: 0.5;
-		background-color: white;
-		z-index: 1000;
-	}
-
-	.loader {
-		width: 48px;
-		height: 48px;
-		display: block;
-		margin: 20px auto;
-		box-sizing: border-box;
-		position: fixed;
-		left: 50%;
-		top: 50%;
-		z-index: 1001;
-		transform: translate(-50%, -50%);
-	}
-	.loader::after {
-		content: '';  
-		box-sizing: border-box;
-		width: 48px;
-		height: 48px;
-		left: 0;
-		bottom: 0;
-		position: absolute;
-		border-radius: 50% 50% 0;
-		border: 15px solid #6E707A;
-		transform: rotate(45deg) translate(0, 0);
-		box-sizing: border-box;
-		animation: animMarker 0.4s ease-in-out infinite alternate;
-	}
-	.loader::before {
-		content: '';  
-		box-sizing: border-box;
-		position: absolute;
-		left: 0;
-		right: 0;
-		margin: auto;
-		top: 150%;
-		width: 24px;
-		height: 4px;
-		border-radius: 50%;
-		background: rgba(0, 0, 0, 0.2);
-		animation: animShadow 0.4s ease-in-out infinite alternate;
-	}
-
-	@keyframes animMarker {
-		0% {
-			transform: rotate(45deg) translate(5px, 5px);
-		}
-		100% {
-			transform: rotate(45deg) translate(-5px, -5px);
-		}
-	}
-
-	@keyframes animShadow {
-		0% {
-			transform: scale(0.5);
-		}
-		100% {
-			transform: scale(1);
-		}
 	}
 
 	@media screen and (max-width: 920px) {
