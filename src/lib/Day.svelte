@@ -1,25 +1,42 @@
 <script lang="ts">
+	import { kToc, kTof, type DayOfWeek, idToImg } from "$lib/weatherApi";
+
+
 	export let celsius: boolean;
+	export let day: DayOfWeek;
+	export let tomorrow: boolean;
+
+	const date: Date = new Date(day.dt * 1000);
+	let dateString: string
+		= date.toLocaleDateString("en-US", {
+				weekday: "short",
+				month: "short",
+				day: "numeric"
+			});
 </script>
 
 <div class="day">
-	<h3 class="title">Tomorrow</h3>
-	<img src="/Clear.png" alt="" />
+	<h3 class="title">
+		{#if tomorrow}
+		Tomorrow
+		{:else}
+		{dateString}
+		{/if}
+	</h3>
+	<img src="{idToImg(day.weather[0].id)}" alt="" />
 	<div class="temp">
 		<p class="maxTemp">
-			16
 			{#if celsius}
-			℃
+			{kToc(day.main.temp_max)}℃
 			{:else}
-			℉
+			{kTof(day.main.temp_max)}℉
 			{/if}
 		</p>
 		<p class="minTemp">
-			11
 			{#if celsius}
-			℃
+			{kToc(day.main.temp_min)}℃
 			{:else}
-			℉
+			{kTof(day.main.temp_min)}℉
 			{/if}
 		</p>
 	</div>

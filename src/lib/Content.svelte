@@ -2,10 +2,11 @@
 	import Week from "$lib/Week.svelte";
 	import Today from "$lib/Today.svelte";
 	import RoundButton from "$lib/RoundButton.svelte";
-	import type { Weather } from "./weatherApi";
+	import type { Weather, Week as WeekInterface } from "./weatherApi";
 
 	export let celsius: boolean;
 	export let weather: Weather;
+	export let weekInterface: WeekInterface;
 
 	let fahrenheit: boolean = !celsius;
 
@@ -24,8 +25,8 @@
 		<RoundButton content="℃" bind:toggle={celsius} fn={setCelsius}/>
 		<RoundButton content="℉" bind:toggle={fahrenheit} fn={setFahrenheit}/>
 	</div>
-	<Week bind:celsius={celsius} />
-	<Today />
+	<Week bind:celsius={celsius} bind:week={weekInterface}/>
+	<Today bind:weather={weather} />
 	<p>created by <a href="https://github.com/louchebem06">louchebem06</a> - devChallenges.io</p>
 </div>
 

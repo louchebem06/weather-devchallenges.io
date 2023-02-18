@@ -1,9 +1,10 @@
 <script lang="ts">
-  	import { type Weather, idToImg, kTof, kToc, getWeather } from "./weatherApi";
+  	import { type Weather, type Week, idToImg, kTof, kToc, getWeather, getWeek } from "./weatherApi";
 
 	export let celsius: boolean;
 	export let weather: Weather;
 	export let loader: boolean;
+	export let week: Week;
 
 	let search: boolean = false;
 	const date: Date = new Date(weather.dt * 1000);
@@ -16,27 +17,20 @@
 	
 	const splitDate = dateString.split(' ');
 	dateString = `${splitDate[0]} ${splitDate[2]} ${splitDate[1]}`; 
-	
-	function beginLoader() {
-		loader = true;
-	}
-
-	function endLoader() {
-		loader = false;
-	}
 
 	function getLocation() {
-		beginLoader();
+		loader = true;
 		navigator.geolocation.getCurrentPosition(
 			async (e) => {
 				const cord = e.coords;
 				const lat = cord.latitude;
 				const lon = cord.longitude;
 				weather = await getWeather(lat, lon) as Weather;
-				endLoader();
+				week = await getWeek(lat, lon) as Week;
+				loader = false;
 			},
 			(e) => {
-				endLoader();
+				loader = false;
 				alert(e.message )
 			}
 		);
@@ -216,6 +210,7 @@
 		color: #A09FB1;
 		font-size: 48px;
 		line-height: 56.35px;
+		margin-top: 65px;
 	}
 
 	.date, .location {

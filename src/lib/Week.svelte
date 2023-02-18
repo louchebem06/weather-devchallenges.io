@@ -1,15 +1,19 @@
 <script lang="ts">
 	import Day from "$lib/Day.svelte";
+	import type { Week as WeekInterface } from "./weatherApi";
 
 	export let celsius: boolean;
+	export let week: WeekInterface;
 </script>
 
 <div class="week">
-	<Day bind:celsius={celsius} />
-	<Day bind:celsius={celsius} />
-	<Day bind:celsius={celsius} />
-	<Day bind:celsius={celsius} />
-	<Day bind:celsius={celsius} />
+{#each week.list as day, i}
+	{#if i == 0}
+	<Day bind:celsius={celsius} bind:day={day} tomorrow={true}/>
+	{:else}
+	<Day bind:celsius={celsius} bind:day={day} tomorrow={false}/>
+	{/if}
+{/each}
 </div>
 
 <style>
